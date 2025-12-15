@@ -175,6 +175,7 @@ st.title("Hydroponics Monitor")
 
 # Placeholders
 main_placeholder = st.empty()
+status_placeholder = st.empty()
 notification_placeholder = st.empty()
 advanced_placeholder = st.empty()
 
@@ -238,10 +239,6 @@ while True:
         elif sensor_data["temperature"] > 28:
             notifications.append(("info", "Temperature is above optimal range. Consider cooling the environment."))
         
-        # Fertilizer notifications
-        if grams_needed >= 0.1:
-            notifications.append(("info", f"Fertilizer needed: Add {grams_needed:.2f}g per liter of NPK 19-19-19."))
-        
         # All good notification
         if not notifications:
             notifications.append(("success", "All parameters are within optimal range. System is healthy."))
@@ -270,8 +267,9 @@ while True:
                         <div class="tank-info">{grams_needed:.2f}g per liter</div>
                     </div>
                 """, unsafe_allow_html=True)
-            
-            # Status badges
+        
+        # Status badges
+        with status_placeholder.container():
             ph_status = "good" if 5.5 <= sensor_data["ph"] <= 7.0 else "warning"
             ph_text = "pH Good" if ph_status == "good" else ("pH Too Low" if sensor_data["ph"] < 5.5 else "pH Too High")
             
@@ -297,7 +295,7 @@ while True:
         
         # Advanced Details (Collapsible)
         with advanced_placeholder.container():
-            with st.expander("Advanced Details"):
+            with st.expander("Advanced Details", expanded=False):
                 st.markdown("### Sensor Readings")
                 col1, col2, col3, col4 = st.columns(4)
                 col1.metric("Temperature", f"{sensor_data['temperature']:.1f} °C")
@@ -337,4 +335,4 @@ while True:
         with main_placeholder.container():
             st.error("Unable to read sensor data. Check Arduino connection.")
     
-    time.sleep(1)
+    time.sleep(1)# streamlit_app.py
