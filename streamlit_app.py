@@ -303,7 +303,7 @@ while True:
                 col1.metric("Temperature", f"{sensor_data['temperature']:.1f} °C")
                 col2.metric("pH", f"{sensor_data['ph']:.1f}")
                 col3.metric("TDS", f"{sensor_data['tds']:.0f} ppm")
-                col4.metric("Light", f"{sensor_data['light']:.0f} lux")
+                col4.metric("Water Level", f"{sensor_data['water_level']:.0f}")
                 
                 st.markdown("---")
                 st.markdown("### NPK Analysis")
@@ -337,4 +337,4 @@ while True:
         with main_placeholder.container():
             st.error("Unable to read sensor data. Check Arduino connection.")
     
-    time.sleep(1)# streamlit_app.py
+    time.sleep(1)
